@@ -1,6 +1,6 @@
 /*******************************************************
- * Scott Schmidt
- * IT 279 – Program 4
+ * Scott Schmidt; DataStructures Using Graphs
+ * IT 279 – Program 4 - Illinois State University 
  * Maze Implementation
  *******************************************************/
 

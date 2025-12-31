@@ -4,14 +4,12 @@
  * IT 279 – Illinois State University
  * Disjoint Set Implementation
 
- Implements a disjoint set using union by size and path compression. 
+Implements a disjoint set using union by size and path compression. 
 It will have a constructor that specifies the number of objects, 
 a find method that returns the set label (an int) for an object given its index, 
 and a doUnion method that takes two object indices, performs the appropriate union,
 and returns true if the resulting set is the same size as the number of objects.
 ********************************************************/
-
-#include "DisjointSet.h"
 #include "DisjointSet.h"
 #include <iostream>
 #include <vector>
