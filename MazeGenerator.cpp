@@ -2,6 +2,12 @@
  * Scott Schmidt
  * IT 279 – Program 4
  * Maze Generator Driver
+
+git add .
+git commit -m "Describe change"
+git push
+
+g++ -std=c++17 DisjointSet.cpp Maze.cpp MazeGenerator.cpp -o maze
  *******************************************************/
 
 #include "Maze.h"
