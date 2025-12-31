@@ -46,7 +46,6 @@ bool DisjointSet::doUnion(int a, int b) {
     }
 }
 
-
 /*
 g++ -std=c++17 DisjointSet.cpp Maze.cpp MazeGenerator.cpp -o maze
 */

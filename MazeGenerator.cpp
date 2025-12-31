@@ -26,7 +26,8 @@ int main(int argc, char* argv[]) {
         maze.setStopEarly(true);
     }
 
-    maze.generate(seed);
+    maze.generate(seed);git push
+
     maze.printMaze(filename);
 
     return 0;
