@@ -16,14 +16,15 @@ g++ -std=c++17 DisjointSet.cpp Maze.cpp MazeGenerator.cpp -o maze
 using namespace std;
 
 int main(int argc, char* argv[]) {
+    //Four Arguments are Required: 
     if (argc < 5) {
         return 1;
     }
 
     int rows = atoi(argv[1]);
     int cols = atoi(argv[2]);
-    string filename = argv[3];
-    unsigned int seed = atoi(argv[4]);
+    string outputFile= argv[3]; //output
+    unsigned int seed = atoi(argv[4]); //conert string to int
 
     Maze maze(rows, cols);
 
