@@ -57,10 +57,12 @@ void Maze::generate(unsigned int seed) {
  
         // 3) If neighbor invalid (edge), flip direction 
         //EDGE CHECK:
-        bool top_edge = (row==0);
-        bool bottom_edge = (row == rows-1);
-        bool left_edge = (col == 0);
-        bool right_edge = (col == cols-1);
+        int cols;
+        int rows;
+        bool top_edge = (rows==0);
+        bool bottom_edge = (rows == rows-1);
+        bool left_edge = (cols == 0);
+        bool right_edge = (cols == cols-1);
 
         // FLIP DIRECTION:  0 (L) <-> 2 (R).  1 (D) <-> 3 (U)
         if (top_edge && dir==3) {dir = 1;}
@@ -68,10 +70,24 @@ void Maze::generate(unsigned int seed) {
         else if(left_edge && dir==0) {dir=2;}
         else if(right_edge && dir==2) {dir=0;}
 
-        // 4) Compute neighbor cell index from (cell, dir)
-        // TODO: implement neighbor computation
-        int neighbor = -1;
- 
+
+         /*
+        4) Compute neighbor cell index from (cell, dir)
+        Maze indexing example (rows = 2, cols = 4):
+
+            [ 0 ][ 1 ][ 2 ][ 3 ]
+            [ 4 ][ 5 ][ 6 ][ 7 ]
+
+        RIGHT → cell + 1
+        DOWN  → cell + cols
+        */
+
+        int neighbor = -1; //temporary placeholder 
+        if (dir==0) {neighbor=cell-1;} //go left one
+        else if (dir==1) {neighbor=cell+rows;} //go down one
+        else if (dir==2) {neighbor=cell+1;} // go right one
+        else if (dir==3) {neighbor=cell-rows;} //to up one
+
         // If you haven't implemented neighbor yet, skip safely:
         if (neighbor < 0 || neighbor >= total || neighbor == cell) {
             continue;
@@ -93,13 +109,16 @@ void Maze::generate(unsigned int seed) {
     }
 }
  
-void Maze::printMaze(const string& filename) const {
-    ofstream out(filename);
+void Maze::printMaze(const string& outputFile) const {
+    ofstream out(outputFile);
     if (!out) return;
  
     // TODO (AUTOGRADER): Replace this with the instructor-provided printing logic.
-    // Leaving it empty is fine for now, but it will not match required output.
+
     out << "hello world\n";  // TEMP DEBUG
+    // TODO: print top border
+    // TODO: print rows
+    // TODO: print bottom border
  
     out.close();
 }

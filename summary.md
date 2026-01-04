@@ -12,11 +12,9 @@ Course: IT279 Data Structures, Illinois State Univeristy
 ## Brief Summary
 This program generates a random maze using a disjoint set (union–find) data structure implemented in C++. The maze is represented as a grid (matrix) of cells, and the union–find structure is used to track which cells are connected as walls are removed.
 
-
-[  0 ][  1 ][  2 ][  3 ]
-[  4 ][  5 ][  6 ][  7 ]
-[  8 ][  9 ][ 10 ][ 11 ]
-[ 12 ][ 13 ][ 14 ][ 15 ]
+[ 0 ][ 1 ][ 2 ]
+[ 3 ][ 4 ][ 5 ]
+[ 6 ][ 7 ][ 8 ]
 
 A DisjointSet class is implemented using union by size and path compression. This class supports finding which set a cell belongs to and uniting two cells when a wall is removed.
 
@@ -38,11 +36,11 @@ Union the two cells
 If YES: Do nothing and Try another random cell/direction
 
 At the end, this is what the maze will look like: 
-[ cell ]──[ cell ]   [ cell ]
+[  0 ]──[  1 ]   [  2 ]
    │        │
-[ cell ]   [ cell ]──[ cell ]
+[  4 ]   [  5 ]──[  6 ]
    │
-[ cell ]──[ cell ]   [ cell ]
+[  8 ]──[  9 ]   [ 10 ]
 
 A maze with N cells is complete after N − 1 successful unions. 
 At this point all cells are connected. 

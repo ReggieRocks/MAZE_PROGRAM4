@@ -16,7 +16,7 @@ g++ -std=c++17 DisjointSet.cpp Maze.cpp MazeGenerator.cpp -o maze
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    //Four Arguments are Required: 
+    //Four Arguments are Required; 5th is Optional: 
     if (argc < 5) {
         return 1;
     }
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 
     maze.generate(seed);
 
-    maze.printMaze(filename);
+    maze.printMaze(outputFile);
 
     return 0;
 }
