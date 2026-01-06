@@ -109,42 +109,52 @@ void Maze::generate(unsigned int seed) {
     }
 }
 
- /*
-    printMaze function prints the maze to a file.
+/*
+    printMaze prints the maze to a file.
 
-    The maze is printed in three parts:
-    1) The top border
-    2) Each row of cells (side walls and spaces)
-    3) The bottom border
-
-    The exact formatting is provided by the instructor.
-    This function only outputs the maze based on the
-    current maze data structure.
-    */
+    The exact formatting of the maze is provided
+    by the instructor. This function should only
+    output the maze based on the current maze
+    data structure.
+*/
 void Maze::printMaze(const string& outputFile) const {
     ofstream out(outputFile);
-    if (!out) return;
-     // 1) Print the top border (top row)
+    if (!out) {
+        return;
+    }
+
+    // Print the top border
     out << "+";
     for (int c = 0; c < cols; c++) {
         out << "---+";
     }
-    out << endl;       
+    out << endl;
 
-     // 2) Print each row of the maze
+    // Print each row of the maze
     for (int r = 0; r < rows; r++) {
 
-        // TODO: print vertical walls and cell contents for row r
+        // Print left wall of row
+        out << "|";
 
-        // TODO: print newline
+        // Print cells and right walls
+        for (int c = 0; c < cols; c++) {
+            out << "   ";
 
-        // TODO: print horizontal walls under row r
+            // TODO: print right wall if it exists,
+            // otherwise print a space
+        }
+        out << endl;
 
-        // TODO: print newline
+        // Print bottom walls
+        out << "+";
+        for (int c = 0; c < cols; c++) {
+
+            // TODO: print bottom wall if it exists,
+            // otherwise print spaces
+            // must end each cell with '+'
+        }
+        out << endl;
     }
-
-    // 3) Print the bottom border
-    // TODO: print bottom border using provided logic
-
     out.close();
 }
+
