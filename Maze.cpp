@@ -10,6 +10,30 @@
 #include <ctime>     // time
 #include <fstream>   // ofstream
  
+namespace {
+    // Wall bit encoding per cell (4-bit mask):
+    // 1 = left, 2 = down, 4 = right, 8 = up
+    constexpr int WALL_LEFT  = 1;
+    constexpr int WALL_DOWN  = 2;
+    constexpr int WALL_RIGHT = 4;
+    constexpr int WALL_UP    = 8;
+
+    constexpr int DIR_LEFT  = 0;
+    constexpr int DIR_DOWN  = 1;
+    constexpr int DIR_RIGHT = 2;
+    constexpr int DIR_UP    = 3;
+
+    int oppositeDir(int dir) {
+        switch (dir) {
+            case DIR_LEFT:  return DIR_RIGHT;
+            case DIR_DOWN:  return DIR_UP;
+            case DIR_RIGHT: return DIR_LEFT;
+            case DIR_UP:    return DIR_DOWN;
+            default:        return dir;
+        }
+    }
+}
+
 Maze::Maze(int r, int c)
     : rows(r), cols(c), walls(r * c, 15), stopEarly(false) // 15 = 1111 (all walls)
 {
@@ -56,19 +80,20 @@ void Maze::generate(unsigned int seed) {
         int dir = rand() % 4; // gets a number between 0 and 3 
  
         // 3) If neighbor invalid (edge), flip direction 
-        //EDGE CHECK:
-        int cols;
-        int rows;
-        bool top_edge = (rows==0);
-        bool bottom_edge = (rows == rows-1);
-        bool left_edge = (cols == 0);
-        bool right_edge = (cols == cols-1);
+        const int cellRow = cell / cols;
+        const int cellCol = cell % cols;
+        const bool top_edge = (cellRow == 0);
+        const bool bottom_edge = (cellRow == rows - 1);
+        const bool left_edge = (cellCol == 0);
+        const bool right_edge = (cellCol == cols - 1);
 
         // FLIP DIRECTION:  0 (L) <-> 2 (R).  1 (D) <-> 3 (U)
-        if (top_edge && dir==3) {dir = 1;}
-        else if (bottom_edge && dir ==1) { dir=3;}
-        else if(left_edge && dir==0) {dir=2;}
-        else if(right_edge && dir==2) {dir=0;}
+        if ((top_edge && dir == DIR_UP) ||
+            (bottom_edge && dir == DIR_DOWN) ||
+            (left_edge && dir == DIR_LEFT) ||
+            (right_edge && dir == DIR_RIGHT)) {
+            dir = oppositeDir(dir);
+        }
 
 
          /*
@@ -83,10 +108,10 @@ void Maze::generate(unsigned int seed) {
         */
 
         int neighbor = -1; //temporary placeholder 
-        if (dir==0) {neighbor=cell-1;} //go left one
-        else if (dir==1) {neighbor=cell+rows;} //go down one
-        else if (dir==2) {neighbor=cell+1;} // go right one
-        else if (dir==3) {neighbor=cell-rows;} //to up one
+        if (dir == DIR_LEFT) { neighbor = cell - 1; }          // left one
+        else if (dir == DIR_DOWN) { neighbor = cell + cols; }  // down one row
+        else if (dir == DIR_RIGHT) { neighbor = cell + 1; }    // right one
+        else if (dir == DIR_UP) { neighbor = cell - cols; }    // up one row
 
         // If you haven't implemented neighbor yet, skip safely:
         if (neighbor < 0 || neighbor >= total || neighbor == cell) {
@@ -98,7 +123,19 @@ void Maze::generate(unsigned int seed) {
             ds.doUnion(cell, neighbor);
  
             // 6) Remove the correct walls in BOTH cells
-            // TODO: implement wall bit removal based on dir + your encoding
+            if (dir == DIR_LEFT) {
+                walls[cell] &= ~WALL_LEFT;
+                walls[neighbor] &= ~WALL_RIGHT;
+            } else if (dir == DIR_DOWN) {
+                walls[cell] &= ~WALL_DOWN;
+                walls[neighbor] &= ~WALL_UP;
+            } else if (dir == DIR_RIGHT) {
+                walls[cell] &= ~WALL_RIGHT;
+                walls[neighbor] &= ~WALL_LEFT;
+            } else if (dir == DIR_UP) {
+                walls[cell] &= ~WALL_UP;
+                walls[neighbor] &= ~WALL_DOWN;
+            }
             ++successfulUnions;
  
             // Extra credit: stop as soon as start connects to finish
@@ -138,20 +175,22 @@ void Maze::printMaze(const string& outputFile) const {
 
         // Print cells and right walls
         for (int c = 0; c < cols; c++) {
+            const int cell = r * cols + c;
             out << "   ";
 
-            // TODO: print right wall if it exists,
-            // otherwise print a space
+            // print right wall if it exists, otherwise print a space
+            out << ((walls[cell] & WALL_RIGHT) ? "|" : " ");
         }
         out << endl;
 
         // Print bottom walls
         out << "+";
         for (int c = 0; c < cols; c++) {
+            const int cell = r * cols + c;
 
-            // TODO: print bottom wall if it exists,
-            // otherwise print spaces
+            // print bottom wall if it exists, otherwise print spaces
             // must end each cell with '+'
+            out << ((walls[cell] & WALL_DOWN) ? "---" : "   ") << "+";
         }
         out << endl;
     }
