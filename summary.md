@@ -23,10 +23,7 @@ The maze generation program uses the disjoint set to determine whether two neigh
 The program takes command-line arguments specifying the maze dimensions, output file name, random seed, and an optional parameter to stop maze generation early. The final maze is printed to a file using the provided printing code. This program was compiled and tested using C++ (g++) and follows all provided assignment constraints.
 
 Maze Generation Process:
-Each step:
-Pick a random cell
-Pick a random direction (left, down, right, up)
-Find the neighboring cell
+At each step, the algorithm randomly selects a cell and a direction, then identifies the neighboring cell. If the two cells are not already connected, the wall between them is removed. This process repeats until all cells are connected. 
 
 Check the disjoint set:
 Are these two cells already connected?
@@ -43,7 +40,7 @@ At the end, this is what the maze will look like:
 [  8 ]──[  9 ]   [ 10 ]
 
 A maze with N cells is complete after N − 1 successful unions. 
-At this point all cells are connected. 
+At this point all cells are connected.
 
 ## A hard-copy of the direct output of your program
 The output of the program was redirected to a text file using Unix redirection commands. 
