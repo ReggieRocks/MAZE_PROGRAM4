@@ -132,8 +132,7 @@ void Maze::printMaze(const string& outputFile) const {
 
     // Print each row of the maze
     for (int r = 0; r < rows; r++) {
-
-        // Print left wall of row
+       // Print left wall of row
         out << "|";
 
         // Print cells and right walls
@@ -148,7 +147,6 @@ void Maze::printMaze(const string& outputFile) const {
         // Print bottom walls
         out << "+";
         for (int c = 0; c < cols; c++) {
-
             // TODO: print bottom wall if it exists,
             // otherwise print spaces
             // must end each cell with '+'
@@ -157,4 +155,3 @@ void Maze::printMaze(const string& outputFile) const {
     }
     out.close();
 }
-
